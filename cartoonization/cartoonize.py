@@ -44,9 +44,10 @@ def cartoonize(load_folder, save_folder, model_path):
             yield l[i:i + n]
     n = 11
     name_list_chunks = list(divide_chunks(my_list, n))
-    count = len(name_list_chunks)
+    total_iteration = len(name_list_chunks)
     print(f"Total image is  {len(name_list)}")
-    print(f"Total iteration is {count}")
+    print(f"Total iteration is {total_iteration}")
+    count=0
     for i in name_list_chunks:
         print(f"Iteration {count}")
         for name in tqdm(i):
