@@ -45,7 +45,7 @@ def cartoonize(load_folder, save_folder, model_path):
     n = 11
     name_list_chunks = list(divide_chunks(my_list, n))
     count = len(name_list_chunks)
-    print(f"Total image is  {name_list}")
+    print(f"Total image is  {len(name_list)}")
     print(f"Total iteration is {count}")
     for i in name_list_chunks:
         print(f"Iteration {count}")
