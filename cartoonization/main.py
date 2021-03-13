@@ -91,3 +91,22 @@ for i in remove_list:
 
 shutil.move("input_video.mp4","./input_video/")
 shutil.move("./cartoonized_images/cartoon.mp4","./input_video/")
+
+os.chdir("./input_video")
+if video_title.endswith(".mp4"):
+    extension=".mp4"
+elif video_title.endswith(".mkv"):
+    extension = ".mkv"
+
+var4=os.system(f"ffmpeg -i input_video{extension} audio.wav")
+if var4==0:
+    print("Successfully export audio")
+else:
+    print("Failed to export audio")
+var5=os.system(f"ffmpeg -i cartoon.mp4 -i audio.wav -c:v copy -c:a aac -map 0:v:0 -map 1:a:0 cartoon_audio.mp4")
+if var5==0:
+    print("Successfully replace audio in output file")
+else:
+    print("Failed to replace audio in output file")
+path_parent1 = os.path.dirname(os.getcwd())
+os.chdir(path_parent1)
