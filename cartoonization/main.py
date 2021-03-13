@@ -69,7 +69,7 @@ else:
    print("cartoonize failed")
 
 os.chdir("./cartoonized_images")
-print(os.getcwd())
+#print(os.getcwd())
 var3=os.system("ffmpeg -framerate 24 -i %03d.jpg cartoon.mp4")
 if var3==0:
     print("We successfully make the cartoonized video.")
@@ -77,7 +77,7 @@ else:
     print("We can't make the cartoonized video.")
 path_parent = os.path.dirname(os.getcwd())
 os.chdir(path_parent)
-print(os.getcwd())
+#print(os.getcwd())
 try:
     os.mkdir("input_video")
 except:
