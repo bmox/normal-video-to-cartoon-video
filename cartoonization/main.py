@@ -14,17 +14,31 @@ try:
    os.remove("input_video.mp4")
 except:
    pass
-test_image=[]
-for i in glob("./test_images/*.jpg"):
-    test_image.append(i)
-for i in test_image:
-   os.remove(i)
 try:
-   cartoonized_images = []
-   for i in glob("./cartoonized_images/*.jpg"):
-      cartoonized_images.append(i)
-   for i in cartoonized_images:
-      os.remove(i)
+    os.mkdir("test_images")
+except:
+    pass
+test_image=[]
+if len(glob("./test_images/*.jpg"))!=0:
+    for i in glob("./test_images/*.jpg"):
+        test_image.append(i)
+    for i in test_image:
+       os.remove(i)
+else:
+    pass
+try:
+    os.mkdir("cartoonized_images")
+except:
+    pass
+try:
+   if len(glob("./cartoonized_images/*.jpg")) != 0:
+       cartoonized_images = []
+       for i in glob("./cartoonized_images/*.jpg"):
+          cartoonized_images.append(i)
+       for i in cartoonized_images:
+          os.remove(i)
+   else:
+       pass
 except Exception as e:
    print(str(e))
 
