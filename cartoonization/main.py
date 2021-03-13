@@ -1,6 +1,6 @@
 from youtube_video_downloader import youtube_downloader
-enter_youtube_link = "https://youtu.be/XsxlLBGwZkw" #@param {type:"string"}
-youtube_quality = "Auto"#@param ["Manual","Auto"]
+enter_youtube_link = "https://youtu.be/eAmGbA0JyIU" #@param {type:"string"}
+youtube_quality = "Manual"#@param ["Manual","Auto"]
 quality_number = "137" #@param {type:"string"}
 youtube_id=enter_youtube_link.split("/")
 youtube_downloader(youtube_id,youtube_quality,quality_number)
