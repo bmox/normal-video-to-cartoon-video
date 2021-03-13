@@ -70,7 +70,7 @@ else:
 
 os.chdir("./cartoonized_images")
 print(os.getcwd())
-var3=os.system("ffmpeg -framerate 24 -i out-%03d.jpg cartoon.mp4")
+var3=os.system("ffmpeg -framerate 24 -i %03d.jpg cartoon.mp4")
 if var3==0:
     print("We successfully make the cartoonized video.")
 else:
