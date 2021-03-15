@@ -1,9 +1,10 @@
 from youtube_video_downloader import youtube_downloader
-enter_youtube_link = "https://youtu.be/eAmGbA0JyIU" #@param {type:"string"}
-youtube_quality = "Manual"#@param ["Manual","Auto"]
+enter_youtube_link = "https://youtu.be/rUWxSEwctFU" #@param {type:"string"}
+youtube_quality = "Auto"#@param ["Manual","Auto"]
 quality_number = "137" #@param {type:"string"}
 youtube_id=enter_youtube_link.split("/")
 youtube_downloader(youtube_id,youtube_quality,quality_number)
+image_extenstion="png"#@param ["jpg","png"]
 frames_image = []
 import os
 from os.path import join
@@ -19,8 +20,8 @@ try:
 except:
     pass
 test_image=[]
-if len(glob("./test_images/*.jpg"))!=0:
-    for i in glob("./test_images/*.jpg"):
+if len(glob(f"./test_images/*.{image_extenstion}"))!=0:
+    for i in glob(f"./test_images/*.{image_extenstion}"):
         test_image.append(i)
     for i in test_image:
        os.remove(i)
@@ -31,9 +32,9 @@ try:
 except:
     pass
 try:
-   if len(glob("./cartoonized_images/*.jpg")) != 0:
+   if len(glob(f"./cartoonized_images/*.{image_extenstion}")) != 0:
        cartoonized_images = []
-       for i in glob("./cartoonized_images/*.jpg"):
+       for i in glob(f"./cartoonized_images/*.{image_extenstion}"):
           cartoonized_images.append(i)
        for i in cartoonized_images:
           os.remove(i)
@@ -54,7 +55,7 @@ if files[0].endswith(".mp4"):
 elif files[0].endswith(".mkv"):
    os.rename(files[0],"input_video.mkv")
 try:
-   var=os.system('ffmpeg -i "./input_video.mp4" "test_images/%03d.jpg"')
+   var=os.system(f'ffmpeg -i "./input_video.mp4" "test_images/%03d.{image_extenstion}"')
    if var==0:
       print("Frame extract successful")
    else:
@@ -70,7 +71,7 @@ else:
 
 os.chdir("./cartoonized_images")
 #print(os.getcwd())
-var3=os.system("ffmpeg -framerate 30 -i %03d.jpg cartoon.mp4")
+var3=os.system(f"ffmpeg -framerate 30 -i %03d.{image_extenstion} cartoon.mp4")
 if var3==0:
     print("We successfully make the cartoonized video.")
 else:
@@ -91,6 +92,7 @@ for i in remove_list:
 
 shutil.move("input_video.mp4","./input_video/")
 shutil.move("./cartoonized_images/cartoon.mp4","./input_video/")
+
 
 os.chdir("./input_video")
 if video_title.endswith(".mp4"):
