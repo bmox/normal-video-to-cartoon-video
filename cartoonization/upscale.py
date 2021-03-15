@@ -1,26 +1,40 @@
-from glob import glob
-# li=[]
-# for i in glob("cartoonized_images/*.jpg"):
-#     print(i)
-#     li.append(i)
-# print(len(li))
+
 import os
+from glob import glob
 import shutil
-os.chdir("./cartoonized_images")
-print(os.getcwd())
-var3=os.system("ffmpeg -framerate 24 -i out-%03d.jpg cartoon.mp4")
-if var3==0:
-    print("We successfully make the cartoonized video.")
-else:
-    print("We can't make the cartoonized video.")
-path_parent = os.path.dirname(os.getcwd())
-os.chdir(path_parent)
-print(os.getcwd())
 try:
-    os.mkdir("input_video")
+  os.chdir(root_path)
 except:
+  pass
+
+image_extenstion="png"#["jpg","png"]
+# print(os.getcwd())
+full_path=os.getcwd()
+low_cartoon=[]
+for i in glob(f"{full_path}/cartoonized_images/*.{image_extenstion}"):
+  low_cartoon.append(i)
+
+os.chdir("./waifu2x-chainer-master")
+for i in glob(f"./*.{image_extenstion}"):
+  try:
+    os.remove(i)
+  except:
     pass
-shutil.move("input_video.mp4","./input_video/")
-shutil.move("./cartoonized_images/cartoon.mp4","./input_video/")
 
 
+for i in low_cartoon:
+  var5=os.system(f"python waifu2x.py --method noise_scale --noise_level 1 --input '{i}' --arch VGG7 --gpu 0")
+
+for i in low_cartoon:
+  os.remove(i)
+
+high_cartoon=[]
+for i in low_cartoon:
+  high_cartoon.append(i.split("/")[-1])
+
+move_path=full_path+"/cartoonized_images/"
+for i in high_cartoon:
+  shutil.move(i,move_path)
+
+path_parent1 = os.path.dirname(os.getcwd())
+os.chdir(path_parent1)
