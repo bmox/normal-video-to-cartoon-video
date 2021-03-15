@@ -63,12 +63,16 @@ try:
 except Exception as e:
    print(str(e))
 
+root_path=os.getcwd()
 var1=os.system("python cartoonize.py")
 if var1==0:
    print("cartoonized complete")
 else:
    print("cartoonize failed")
 
+  #upscale image
+   
+   
 os.chdir("./cartoonized_images")
 #print(os.getcwd())
 var3=os.system(f"ffmpeg -framerate 30 -i %03d.{image_extenstion} cartoon.mp4")
