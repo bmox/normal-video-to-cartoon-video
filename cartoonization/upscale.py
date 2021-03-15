@@ -2,10 +2,10 @@
 import os
 from glob import glob
 import shutil
-try:
-  os.chdir(root_path)
-except:
-  pass
+# try:
+#   os.chdir(root_path)
+# except:
+#   pass
 
 image_extenstion="png"#["jpg","png"]
 # print(os.getcwd())
