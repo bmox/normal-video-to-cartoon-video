@@ -1,18 +1,12 @@
 from youtube_video_downloader import youtube_downloader
-# enter_youtube_link = "https://youtu.be/cPhp6e6ZWmE" #@param {type:"string"}
-# youtube_quality = "Auto"#@param ["Manual","Auto"]
-# quality_number = "137" #@param {type:"string"}
-# youtube_id=enter_youtube_link.split("/")
-# youtube_downloader(youtube_id,youtube_quality,quality_number)
-
-
-# from youtube_video_downloader import youtube_downloader
 # !python test.py https://youtu.be/eAmGbA0JyIU,Auto,137,full_video,00:00:00,00:00:60,yes
 import sys
 import os
 from glob import glob
+import datetime
 argu=str(sys.argv[1])
 my_parameter=argu.split(",")
+
 delete_video = []
 extensions = ['/*.mp4', '/*.mkv']
 for ext in extensions:
@@ -24,39 +18,51 @@ for i in delete_video:
     print("Delete old video")
   except:
     pass
+enter_youtube_link = my_parameter[0]
+youtube_quality = my_parameter[1]
+quality_number = my_parameter[2]
+select_duration = my_parameter[3]
+enter_start_time = my_parameter[4]
+enter_end_time = my_parameter[5]
+youtube_downloader(enter_youtube_link,youtube_quality,quality_number)
 
-a,b,c=youtube_downloader(my_parameter)
-# print(a,b,c)
-# a,b,c="00:00:00", "some_part", "0:01:00"
+def trim(enter_start_time,enter_end_time,select_duration):
+  start_time_float = enter_start_time.split(":")
+  end_time_float = enter_end_time.split(":")
+  start_time_in_second = (float(start_time_float[0]) * 60 * 60) + (float(start_time_float[1]) * 60) + float(
+      start_time_float[2])
+  end_time_in_second = (float(end_time_float[0]) * 60 * 60) + (float(end_time_float[1]) * 60) + float(
+      end_time_float[2])
+  files = []
+  extensions = ['/*.mp4', '/*.mkv']
+  for ext in extensions:
+      files.extend(glob(os.getcwd()+ext))
+  print(files)
+  extensions = ['/*.mp4', '/*.mkv']
+  for ext in extensions:
+      files.extend(glob(os.getcwd()+ext))
+  print(files)
+  dummy_extenstion=""
+  if files[0].endswith(".mp4"):
+      dummy_extenstion=".mp4"
+  elif files[0].endswith(".mkv"):
+      dummy_extenstion=".mkv"
+  if select_duration == "full_video":
+      pass
+  elif select_duration == "some_part":
+      cut_time_duration = end_time_in_second - start_time_in_second
+      cut_time = str(datetime.timedelta(seconds=cut_time_duration))
+      print("Trim video")
+      cut_command = f"ffmpeg -ss {enter_start_time} -i '{files[0]}' -t {cut_time} -c copy 'cut{dummy_extenstion}'"
+      print(cut_command)
+      var7=os.system(cut_command)
+      print(var7)
+      os.remove(files[0])
+      os.rename(f"cut{dummy_extenstion}", files[0])
+trim(enter_start_time,enter_end_time,select_duration)
+print(my_parameter[-1])
 
-def trim(a,b,c):
-    enter_start_time=a
-    select_duration=b
-    cut_time=c
-    files = []
-    extensions = ['/*.mp4', '/*.mkv']
-    for ext in extensions:
-        files.extend(glob(os.getcwd()+ext))
-    print(files)
-    dummy_extenstion=""
-    if files[0].endswith(".mp4"):
-        dummy_extenstion=".mp4"
-    elif files[0].endswith(".mkv"):
-        dummy_extenstion=".mkv"
-    if select_duration == "full_video":
-        pass
-    elif select_duration == "some_part":
-        print("Trim video")
-        cut_command = f"ffmpeg -ss {enter_start_time} -i '{files[0]}' -t {cut_time} -c copy 'cut{dummy_extenstion}'"
-#         print(cut_command)
-        var7=os.system(cut_command)
-        if var7==0:
-         print("Trim video done")
-        else:
-         print("Can't trim")
-        os.remove(files[0])
-        os.rename(f"cut{dummy_extenstion}", files[0])
-trim(a,b,c)
+
 # print(my_parameter[-1])
 
 
