@@ -168,7 +168,7 @@ for i in remove_list:
          pass
 
 shutil.move(f"input_video{video_extenstion}","./input_video/")
-shutil.move(f"./cartoonized_images/{video_extenstion}","./input_video/")
+shutil.move(f"./cartoonized_images/cartoon{video_extenstion}","./input_video/")
 
 
 os.chdir("./input_video")
