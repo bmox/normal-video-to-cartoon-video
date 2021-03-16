@@ -113,12 +113,15 @@ for ext in extensions:
 
 print(files)
 video_title=files[0]
+video_extenstion=""
 if files[0].endswith(".mp4"):
+   video_extenstion=".mp4"
    os.rename(files[0],"input_video.mp4")
 elif files[0].endswith(".mkv"):
+   video_extenstion=".mkv"
    os.rename(files[0],"input_video.mkv")
 try:
-   var=os.system(f'ffmpeg -i "./input_video.mp4" "test_images/%03d.{image_extenstion}"')
+   var=os.system(f'ffmpeg -i "./input_video{video_extenstion}" "test_images/%03d.{image_extenstion}"')
    if var==0:
       print("Frame extract successful")
    else:
@@ -145,7 +148,7 @@ else:
    
 os.chdir("./cartoonized_images")
 #print(os.getcwd())
-var3=os.system(f"ffmpeg -framerate 30 -i %03d.{image_extenstion} cartoon.mp4")
+var3=os.system(f"ffmpeg -framerate 30 -i %03d.{image_extenstion} cartoon{video_extenstion}")
 if var3==0:
     print("We successfully make the cartoonized video.")
 else:
@@ -157,15 +160,15 @@ try:
     os.mkdir("input_video")
 except:
     pass
-remove_list=["./input_video/input_video.mp4","./input_video/cartoon.mp4"]
+remove_list=["./input_video/input_video.mp4","./input_video/cartoon.mp4","./input_video/input_video.mkv","./input_video/cartoon.mkv"]
 for i in remove_list:
       try:
          os.remove(i)
       except:
          pass
 
-shutil.move("input_video.mp4","./input_video/")
-shutil.move("./cartoonized_images/cartoon.mp4","./input_video/")
+shutil.move(f"input_video{video_extenstion}","./input_video/")
+shutil.move(f"./cartoonized_images/{video_extenstion}","./input_video/")
 
 
 os.chdir("./input_video")
@@ -179,7 +182,7 @@ if var4==0:
     print("Successfully export audio")
 else:
     print("Failed to export audio")
-var5=os.system(f"ffmpeg -i cartoon.mp4 -i audio.wav -c:v copy -c:a aac -map 0:v:0 -map 1:a:0 cartoon_audio.mp4")
+var5=os.system(f"ffmpeg -i cartoon{video_extenstion} -i audio.wav -c:v copy -c:a aac -map 0:v:0 -map 1:a:0 cartoon_audio{video_extenstion}")
 if var5==0:
     print("Successfully replace audio in output file")
 else:
